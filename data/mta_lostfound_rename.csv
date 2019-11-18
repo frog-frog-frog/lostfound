@@ -1,0 +1,222 @@
+category,subcategory,amount
+Home Furnishings,Wall and Window Covering,113
+Home Furnishings,Ornaments,66
+Home Furnishings,Appliances,183
+Home Furnishings,Linen,1774
+Home Furnishings,Floor Covering,48
+Home Furnishings,All Other Furnishings,721
+Home Furnishings,Dishware,887
+Sports Equipment,Bats,20
+Sports Equipment,Scooter,129
+Sports Equipment,Golf Club,7
+Sports Equipment,Ball,373
+Sports Equipment,Skateboard,118
+Sports Equipment,Binocular,32
+Sports Equipment,Electric Motor Scooter,3
+Sports Equipment,Protective Gear,544
+Sports Equipment,Hockey Stick,11
+Sports Equipment,Sports Racket,184
+Sports Equipment,Bicycle,275
+Sports Equipment,Skis,3
+Sports Equipment,All Other sports equipment,716
+Wallet/ Purse,Pouch,5045
+Wallet/ Purse,Wristlet,2941
+Wallet/ Purse,Purse,13342
+Wallet/ Purse,ID Holder,12146
+Wallet/ Purse,Business Card holder,799
+Wallet/ Purse,Billfold,407
+Wallet/ Purse,Handbag,741
+Wallet/ Purse,Lanyard,76
+Wallet/ Purse,All Other Wallet / Purse,1562
+Wallet/ Purse,Fanny pack,301
+Wallet/ Purse,Wallet,59646
+Accessories,Scarf,2909
+Accessories,All Other Accessories,1647
+Accessories,Hat,5836
+Accessories,Gloves,4706
+Accessories,Make-up,2747
+Accessories,Ties,418
+Accessories,Belt,465
+Accessories,Umbrella,4372
+Clothing,Jacket,4715
+Clothing,Coat,855
+Clothing,Nightwear,213
+Clothing,Skirt,642
+Clothing,Blouse,1123
+Clothing,Sweater,3787
+Clothing,Pants/trousers/shorts,8452
+Clothing,Suit,129
+Clothing,Shirt,5655
+Clothing,Under garment,3613
+Clothing,All Other Clothing,5873
+Clothing,T-shirt,4584
+Clothing,Dress,1016
+Clothing,Leather Jacket,92
+Medical,Insulin Pump,116
+Medical,Medication,7096
+Medical,X - Rays,104
+Medical,Other,587
+Medical,Walker,16
+Medical,Wheel Chair,20
+Medical,Blood Pressure Meter,88
+Medical,All Other Medical Equipment / Supplies,1092
+Medical,Electric wheelchair/scooter,3
+Medical,Cane,791
+Medical,Diabetic Testing Equipment,169
+Medical,Glucose Meter,374
+Tools,Tools,1739
+Tools,Tool Box,129
+Tools,Tool Belt,37
+Keys,Car,3062
+Keys,House,16315
+Keys,Electronic key card,876
+Keys,All other keys,4075
+Currency,Gift Card,4439
+Currency,Payroll check,1441
+Currency,Money Order,265
+Currency,Personal Check,1911
+Currency,Travelers Checks,22
+Currency,Other Currency,243
+Currency,Cash,53615
+Currency,Foreign Currency,3198
+Musical Instrument,Flute,122
+Musical Instrument,Musical instrument accessories,91
+Musical Instrument,Clarinet,103
+Musical Instrument,All Other Instruments,166
+Musical Instrument,Guitar,67
+Musical Instrument,Violin,136
+Musical Instrument,Harmonica,12
+Musical Instrument,Saxophone,49
+Musical Instrument,Trumpet,110
+Jewelry,Fashion (Costume),4124
+Jewelry,Cuff Links,11
+Jewelry,Necklace,584
+Jewelry,Watch,2216
+Jewelry,Ring,1484
+Jewelry,Bracelet,931
+Jewelry,Earrings,539
+Jewelry,All other Jewelry,212
+Jewelry,Tie Clips,2
+Tickets,Transit Check,216
+Tickets,All Other Tickets,675
+Tickets,NJ Transit,595
+Tickets,Metro North Tickets,319
+Tickets,Lottery Tickets,884
+Tickets,Entertainment Tickets,175
+Tickets,MTA Metrocard,64809
+Tickets,LIRR Tickets,516
+Tickets,Airline,148
+Book,Photo album,50
+Book,Paperback,7801
+Book,Address book,922
+Book,Soft cover,4299
+Book,Other,1046
+Book,Diary,789
+Book,Hard Cover,4214
+NYCT Equipment,Vest,23
+NYCT Equipment,Badge,76
+NYCT Equipment,Radio,11
+NYCT Equipment,Pass or Badge holder,20
+NYCT Equipment,All other NYCT Equipment,95
+NYCT Equipment,Epic pass,550
+Miscellaneous,Lunch box,2095
+Miscellaneous,Blue print,35
+Miscellaneous,Photo/Pictures,1441
+Miscellaneous,Baby stroller/Carrier,181
+Miscellaneous,Portfolio,912
+Miscellaneous,All Other Misc Items,38226
+Miscellaneous,Art and Crafts,803
+Miscellaneous,Mail,3675
+Miscellaneous,Checkbook,1098
+Miscellaneous,Tefillin/Phylacteries (Jewish),32
+Miscellaneous,Folder,6635
+Miscellaneous,Envelope,3968
+Miscellaneous,Stationary Supplies,5522
+Communication,Walkie Talkie,193
+Communication,Answering Machine,9
+Communication,Other,87
+Communication,Cell phone,61025
+Communication,Pager,92
+Communication,Telephone Accessories,6847
+Toys,Baby Toys,217
+Toys,All Other Toys,991
+Toys,Board Game,126
+Toys,Doll,264
+Toys,Cars/Trucks,294
+Toys,Stuffed Animals,417
+Electronics,Digital Camera,1018
+Electronics,USB Drive,771
+Electronics,Portable radio,375
+Electronics,Computer,1539
+Electronics,GPS Navigation System,54
+Electronics,CD Player,163
+Electronics,Electronic accessories,1080
+Electronics,All other Electronics,2830
+Electronics,Digital media/ MP3/4 Player,2355
+Electronics,Record Player,36
+Electronics,Photo/Video Equipment,353
+Electronics,Television set,13
+Electronics,Body Activity Tracker,147
+Electronics,Earphones Speakers,1422
+Electronics,Computer External Hard Drive,49
+Electronics,Camera Accessories,417
+Electronics,Clock,20
+Electronics,Walkman,89
+Electronics,DVD Player,162
+Electronics,Camera,336
+Electronics,Calculator,643
+Electronics,Air conditioner,2
+Electronics,Translator,33
+Electronics,Computer Accesories,498
+Electronics,PDA,18
+Electronics,Electronic Tablet,1690
+Electronics,Electronic Reading Device,968
+Bags,Suitcase,764
+Bags,Handbag,4899
+Bags,Shoulder bag,5050
+Bags,Briefcase,855
+Bags,Shopping bag,21856
+Bags,Tote bag,9318
+Bags,Garment/suit bag,216
+Bags,Duffle bag,1839
+Bags,Backpack,20456
+Bags,All other baggage,7841
+Bags,Messenger bag,305
+Eye Wear,Eyeglass case without glasses,658
+Eye Wear,Eye glasses,11203
+Eye Wear,Other,370
+Eye Wear,Sunglasses,4289
+Identification,Debit Card,55859
+Identification,Badge,298
+Identification,Passport,4244
+Identification,Social Security Card,9667
+Identification,Birth Certificate,1552
+Identification,School ID,22227
+Identification,Credit Card,30030
+Identification,AAA Card,910
+Identification,Resident Card,1487
+Identification,Employment ID,10735
+Identification,Identification Card,23045
+Identification,Library Card,7664
+Identification,All Other Personal Identification,12992
+Identification,Membership card,13305
+Identification,Military ID,374
+Identification,Drivers License,27238
+Identification,Registration Card,458
+Identification,Benefit Card,16424
+Identification,Insurance Card,21844
+Identification,Death Certificate,33
+Entertainment,Video Games System,543
+Entertainment,All Other Entertainment,370
+Entertainment,VHS Tape,122
+Entertainment,DVD,1277
+Entertainment,Blu-Ray,12
+Entertainment,Computer Games,433
+Entertainment,Compact Disc,1030
+Footwear,Shoes,3160
+Footwear,Boots,1144
+Footwear,Slipper,814
+Footwear,Sandals,704
+Footwear,Galoshes,48
+Footwear,All Other Footwear,224
+Footwear,Sneakers,3420

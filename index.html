@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>lost + found</title>
+    <meta charset="utf-8" />
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://use.typekit.net/zli3nvz.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.7.3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@4.0.0-beta.11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.0.0"></script>
+
+    <style media="screen">
+      /* Add space between Vega-Embed links  */
+      .vega-actions a {
+        margin-right: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>lost + found on the mta</h1>
+    <main>
+       
+       <section>
+           <div class="bodytext">
+               <h2>mta ridership stats + context</h2>
+               <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.</p>
+           </div>
+       </section>
+        <!--<section>
+            <h2>everything in the lost & found by category</h2>
+            <div id="lost-all-vis" class="vis-embed"></div>
+        </section>-->
+        
+        <section>
+            <div class="bodytext">
+                <h2 class="vis-title">15 most common categories of items in the lost & found</h2>
+            </div>
+            <div id="lost-top-vis" class="vis-embed"></div>
+        </section>
+        
+        <!--
+        <section>
+            <h2>least common categories of items in the lost & found</h2>
+            <div id="lost-bottom-vis" class="vis-embed"></div>
+        </section>-->
+        
+       <section>
+           <div class="bodytext">
+               <h2>Accessories</h2>
+           </div>
+           <div id="accessories-vis" class="vis-embed"></div>
+       </section>
+       
+       <section>
+           <div class="bodytext">
+               <h2>explore by item</h2>
+               <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.</p>
+           </div>
+       </section>
+    </main>
+        
+        <!-- VEGA EMBED SCRIPTS -->
+
+        <!-- all categories vis -->
+        <script>
+          var vlSpec = 
+      {
+      "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+      "data": {
+        "format": {"type": "csv"},
+        "url": "data/mta_lostfound_rename.csv"
+      },
+    "transform": [
+        {
+          "stack": "amount",
+          "groupby": [],
+          "as": [
+            "stack_count_Origin1",
+            "stack_count_Origin2"
+          ],
+          "offset": "normalize",
+          "sort": [
+            {
+              "field": "category",
+              "order": "ascending"
+            }
+          ]
+        },
+        {
+          "window": [
+            {
+              "op": "min",
+              "field": "stack_count_Origin1",
+              "as": "y"
+            },
+            {
+              "op": "max",
+              "field": "stack_count_Origin2",
+              "as": "y2"
+            },
+            {
+              "op": "dense_rank",
+              "as": "rank_Cylinders"
+            },
+            {
+              "op": "distinct",
+              "field": "subcategory",
+              "as": "distinct_Cylinders"
+            }
+          ],
+          "groupby": [
+            "category"
+          ],
+          "frame": [
+            null,
+            null
+          ],
+          "sort": [
+            {
+              "field": "subcategory",
+              "order": "ascending"
+            }
+          ]
+        },
+        {
+          "window": [
+            {
+              "op": "dense_rank",
+              "as": "rank_Origin"
+            }
+          ],
+          "frame": [
+            null,
+            null
+          ],
+          "sort": [
+            {
+              "field": "category",
+              "order": "ascending"
+            }
+          ]
+        },
+        {
+          "stack": "amount",
+          "groupby": [
+            "category"
+          ],
+          "as": [
+            "x",
+            "x2"
+          ],
+          "offset": "normalize",
+          "sort": [
+            {
+              "field": "subcategory",
+              "order": "ascending"
+            }
+          ]
+        },
+        {
+          "calculate": "datum.x + (datum.rank_Cylinders - 1) * datum.distinct_Cylinders * 0.000001/datum.distinct_Cylinders",
+          "as": "nx"
+        },
+        {
+          "calculate": "datum.x2 + (datum.rank_Cylinders - 1) * datum.distinct_Cylinders * 0.0000001/datum.distinct_Cylinders",
+          "as": "nx2"
+        },
+        {
+          "calculate": "datum.y + (datum.rank_Origin - 1) * 0.003",
+          "as": "ny"
+        },
+        {
+          "calculate": "datum.y2 + (datum.rank_Origin - 1) * 0.003",
+          "as": "ny2"
+        },
+        {
+          "calculate": "(datum.nx+datum.nx2)/2",
+          "as": "xc"
+        },
+        {
+          "calculate": "(datum.ny+datum.ny2)/2",
+          "as": "yc"
+        }
+      ],
+      "vconcat": [
+        {
+          "layer": [
+                {
+          "mark": {
+            "type": "text",
+            "font": "neue-haas-unica",
+            "fontSize": 14,
+            "fontWeight": 500,
+            "baseline": "middle",
+            "align": "right",
+            "dx": -15
+
+          },
+          "encoding": {
+            "y": {
+              "aggregate": "min",
+              "field": "yc",
+              "type": "quantitative",
+              "title": "",
+              "axis": {
+                "orient": "left"
+              }
+            },
+            "color": {
+              "field": "category",
+              "type": "nominal",
+              "legend": null
+            },
+            "text": {
+              "field": "category",
+              "type": "nominal"
+            }
+          }
+        },
+            {
+              "width": 1000,
+              "height": 2000,
+                "selection": {
+                "highlight": {"type": "single", "empty": "none", "on": "mouseover"},
+                "selectCat": {"type": "single", "fields": ["category"]},
+                "select": {"type": "multi"}
+              },
+              "mark": {
+                "type": "rect",
+                "stroke": "white",
+                "strokeOpacity": 1,
+                "strokeWidth": 2
+              },
+              "encoding": {
+                "x": {
+                  "field": "nx",
+                  "type": "quantitative",
+                  "axis": null
+                },
+                "x2": {
+                  "field": "nx2"
+                },
+                "y": {
+                  "field": "ny",
+                  "type": "quantitative",
+                  "axis": null
+                },
+                "y2": {
+                  "field": "ny2"
+                },
+                "color": {
+                  "condition": {"selection": "selectCat", "field": "category", "type": "nominal", "legend": null},
+                  "value": "gray"
+                },
+                "fillOpacity": {
+                  "legend": null,
+                  "type":"nominal",
+                  "condition": {"selection": "select", "value": 1
+                  },
+
+                  "value": 0.5
+                },
+                "opacity": {
+                    "condition": [
+                      {
+                        "test": {
+                          "and": [
+                            {"selection": "select"},
+                            "length(data(\"select_store\"))"
+                          ]
+                        },
+                        "value": 1
+                      },
+                      {"selection": "highlight", "value": 1}
+                    ],
+                    "value": 0.8
+                  },
+                "tooltip": [
+                  {
+                    "field": "subcategory",
+                    "type": "nominal"
+                  },
+                  {
+                    "field": "amount",
+                    "type": "quantitative"
+                  },
+                                  {
+                    "field": "category",
+                    "type": "nominal"
+                  }
+                ]
+              }
+            },
+            {
+              "mark": {
+                "type": "text",
+                "font": "neue-haas-unica",
+                "fontSize": 12,
+                "baseline": "middle",
+                "limit": 60
+              },
+              "encoding": {
+                "y": {
+                  "field": "yc",
+                  "type": "quantitative",
+                  "axis": null
+                },
+                "x": {
+                  "field": "xc",
+                  "type": "quantitative",
+                  "axis": {
+                    "title": "subcategory",
+                    "titleFont": "neue-haas-unica",
+                    "titleFontSize": 14,
+                    "titleFontWeight": 400,
+                      "titleAlign": "center",
+                    "orient": "top",
+                    "offset": -50
+                  }
+                },
+                "text": {
+                  "field": "subcategory",
+                  "type": "nominal"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "resolve": {
+        "scale": {
+          "y": "shared"
+        }
+      },
+      "config": {
+        "view": {
+          "stroke": ""
+        },
+        "concat": {"spacing": 10},
+        "axis": {
+          "domain": false,
+          "ticks": false,
+          "labels": false,
+          "grid": false
+        }
+      }
+    }
+            var tooltipOptions = {
+              theme: 'custom'
+            };
+
+          vegaEmbed('#lost-all-vis', vlSpec, {tooltip: tooltipOptions});
+        </script>
+
+        <!-- most common vis -->
+        <!-- based on mosiac chart example (vega.github.io/vega-lite/examples/rect_mosaic_labelled_with_offset.html) with highlighting code based on (vega.github.io/vega-lite/examples/interactive_bar_select_highlight.html)-->
+        <script>
+          var vlSpec = 
+      {
+      "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+      "data": {
+        "format": {"type": "csv"},
+        "url": "data/mta_lostfound_top.csv"
+      },
+        "transform": [
+        {
+          "stack": "amount",
+          "groupby": [],
+          "as": [
+            "stack_count_cat1",
+            "stack_count_cat2"
+          ],
+          "offset": "normalize",
+          "sort": [
+            {
+              "field": "category",
+              "order": "ascending"
+            }
+          ]
+        },
+        {
+          "window": [
+            {
+              "op": "min",
+              "field": "stack_count_cat1",
+              "as": "y"
+            },
+            {
+              "op": "max",
+              "field": "stack_count_cat2",
+              "as": "y2"
+            },
+            {
+              "op": "dense_rank",
+              "as": "rank_subcat"
+            },
+            {
+              "op": "distinct",
+              "field": "subcategory",
+              "as": "distinct_subcat"
+            }
+          ],
+          "groupby": [
+            "category"
+          ],
+          "frame": [
+            null,
+            null
+          ],
+          "sort": [
+            {
+              "field": "subcategory",
+              "order": "ascending"
+            }
+          ]
+        },
+        {
+          "window": [
+            {
+              "op": "dense_rank",
+              "as": "rank_cat"
+            }
+          ],
+          "frame": [
+            null,
+            null
+          ],
+          "sort": [
+            {
+              "field": "category",
+              "order": "ascending"
+            }
+          ]
+        },
+        {
+          "stack": "amount",
+          "groupby": [
+            "category"
+          ],
+          "as": [
+            "x",
+            "x2"
+          ],
+          "offset": "normalize",
+          "sort": [
+            {
+              "field": "subcategory",
+              "order": "ascending"
+            }
+          ]
+        },
+        {
+          "calculate": "datum.x + (datum.rank_subcat - 1) * datum.distinct_subcat * 0.000001/datum.distinct_subcat",
+          "as": "nx"
+        },
+        {
+          "calculate": "datum.x2 + (datum.rank_subcat - 1) * datum.distinct_subcat * 0.0000001/datum.distinct_subcat",
+          "as": "nx2"
+        },
+        {
+          "calculate": "datum.y + (datum.rank_cat - 1) * 0.003",
+          "as": "ny"
+        },
+        {
+          "calculate": "datum.y2 + (datum.rank_cat - 1) * 0.003",
+          "as": "ny2"
+        },
+        {
+          "calculate": "(datum.nx+datum.nx2)/2",
+          "as": "xc"
+        },
+        {
+          "calculate": "(datum.ny+datum.ny2)/2",
+          "as": "yc"
+        }
+      ],
+       "vconcat": [
+        {
+          "layer": [
+                {
+          "mark": {
+            "type": "text",
+            "font": "neue-haas-unica",
+            "fontSize": 14,
+            "fontWeight": 500,
+            "baseline": "middle",
+            "align": "right",
+            "dx": -15
+
+          },
+          "encoding": {
+            "y": {
+              "aggregate": "min",
+              "field": "yc",
+              "type": "quantitative",
+              "title": "",
+              "axis": {
+                "orient": "left"
+              }
+            },
+            "color": {
+              "field": "category",
+              "type": "nominal",
+              "legend": null
+            },
+            "text": {
+              "field": "category",
+              "type": "nominal"
+            }
+          }
+        },
+            {
+              "width": 1000,
+              "height": 1500,
+                "selection": {
+                "highlight": {"type": "single", "empty": "none", "on": "mouseover"},
+                "selectCat": {"type": "single", "fields": ["category"]},
+                "select": {"type": "multi"}
+              },
+              "mark": {
+                "type": "rect",
+                "stroke": "white",
+                "strokeOpacity": 1,
+                "strokeWidth": 2
+              },
+              "encoding": {
+                "x": {
+                  "field": "nx",
+                  "type": "quantitative",
+                  "axis": null
+                },
+                "x2": {
+                  "field": "nx2"
+                },
+                "y": {
+                  "field": "ny",
+                  "type": "quantitative",
+                  "axis": null
+                },
+                "y2": {
+                  "field": "ny2"
+                },
+                "color": {
+                  "condition": {"selection": "selectCat", "field": "category", "type": "nominal", "legend": null},
+                  "value": "gray"
+                },
+                "fillOpacity": {
+                  "legend": null,
+                  "type":"nominal",
+                  "condition": {"selection": "select", "value": 1
+                  },
+
+                  "value": 0.75
+                },
+                "opacity": {
+                    "condition": [
+                      {
+                        "test": {
+                          "and": [
+                            {"selection": "select"},
+                            "length(data(\"select_store\"))"
+                          ]
+                        },
+                        "value": 1
+                      },
+                      {"selection": "highlight", "value": 1}
+                    ],
+                    "value": 0.8
+                  },
+                "tooltip": [
+                  {
+                    "field": "subcategory",
+                    "type": "nominal"
+                  },
+                  {
+                    "field": "amount",
+                    "type": "quantitative"
+                  },
+                                  {
+                    "field": "category",
+                    "type": "nominal"
+                  }
+                ]
+              }
+            },
+            {
+              "mark": {
+                "type": "text",
+                "font": "neue-haas-unica",
+                "fontSize": 12,
+                "baseline": "middle",
+                "limit": 60
+              },
+              "encoding": {
+                "y": {
+                  "field": "yc",
+                  "type": "quantitative",
+                  "axis": null
+                },
+                "x": {
+                  "field": "xc",
+                  "type": "quantitative",
+                  "axis": {
+                    "title": "subcategory",
+                    "titleFont": "neue-haas-unica",
+                    "titleFontSize": 14,
+                    "titleFontWeight": 400,
+                      "titleAlign": "center",
+                    "orient": "top",
+                    "offset": -80
+                  }
+                },
+                "text": {
+                  "field": "subcategory",
+                  "type": "nominal"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "resolve": {
+        "scale": {
+          "y": "shared"
+        }
+      },
+      "config": {
+        "view": {
+          "stroke": ""
+        },
+        "concat": {"spacing": 10},
+        "axis": {
+          "domain": false,
+          "ticks": false,
+          "labels": false,
+          "grid": false
+        }
+      }
+    }
+            var options = {
+                tooltip: {theme: 'custom'},
+                actions: false
+            };
+
+          vegaEmbed('#lost-top-vis', vlSpec, options);
+        </script>
+        
+        <!-- accessories vis -->
+        <script>
+          var vlSpec = 
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "data": {
+    "format": {"type": "csv"},
+    "url": "data/mta_lostfound_accessories.csv"
+  },
+  "transform": [
+    {
+      "calculate": 
+      "{'Scarf': '🧣', 'Other': '✨', 'Hat': '🧢', 'Gloves': '🧤', 'Make-up': '💄', 'Ties': '👔', 'Belt': '👖', 'Umbrella': '🌂'}[datum.subcategory]",
+      "as": "emoji"
+    },
+    {"window": [{"op": "rank", "as": "rank"}], "groupby": ["category", "subcategory"]}
+  ],
+  "width": 1000,
+  "height": 900,
+  "mark": {"type": "text", "baseline": "middle"},
+  "encoding": {
+    "y": {"field": "rank", "type": "ordinal", "axis": null},
+    "x": {"field": "subcategory", "type": "nominal", 
+          "axis": {
+            "orient": "top",
+            "offset": 15,
+            "labelAngle": 0,
+            "labelFont": "neue-haas-unica",
+            "labelFontSize": 14,
+            "labelFontWeight": 500
+          }, 
+          "sort": null,
+          "title": null},
+    "text": {"field": "emoji", "type": "nominal"},
+    "size": {"value": 65},
+    "tooltip": [{
+        "field": "subcategory",
+        "type": "nominal"
+     },
+     {
+        "field": "amount",
+        "type": "quantitative"
+     }]
+  },
+  "config": {"view": {"stroke": ""}}
+}
+            var options = {
+                tooltip: {theme: 'custom'},
+                actions: false
+            };
+
+          vegaEmbed('#accessories-vis', vlSpec, options);
+        </script>
+
+
+        <!-- least common vis -->
+        <script>
+          var vlSpec = 
+      {
+      "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+      "data": {
+        "format": {"type": "csv"},
+        "url": "data/mta_lostfound_bottom.csv"
+      },
+      "transform": [
+        {
+          "stack": "amount",
+          "groupby": [],
+          "as": [
+            "stack_count_Origin1",
+            "stack_count_Origin2"
+          ],
+          "offset": "normalize",
+          "sort": [
+            {
+              "field": "category",
+              "order": "ascending"
+            }
+          ]
+        },
+        {
+          "window": [
+            {
+              "op": "min",
+              "field": "stack_count_Origin1",
+              "as": "y"
+            },
+            {
+              "op": "max",
+              "field": "stack_count_Origin2",
+              "as": "y2"
+            },
+            {
+              "op": "dense_rank",
+              "as": "rank_Cylinders"
+            },
+            {
+              "op": "distinct",
+              "field": "subcategory",
+              "as": "distinct_Cylinders"
+            }
+          ],
+          "groupby": [
+            "category"
+          ],
+          "frame": [
+            null,
+            null
+          ],
+          "sort": [
+            {
+              "field": "subcategory",
+              "order": "ascending"
+            }
+          ]
+        },
+        {
+          "window": [
+            {
+              "op": "dense_rank",
+              "as": "rank_Origin"
+            }
+          ],
+          "frame": [
+            null,
+            null
+          ],
+          "sort": [
+            {
+              "field": "category",
+              "order": "ascending"
+            }
+          ]
+        },
+        {
+          "stack": "amount",
+          "groupby": [
+            "category"
+          ],
+          "as": [
+            "x",
+            "x2"
+          ],
+          "offset": "normalize",
+          "sort": [
+            {
+              "field": "subcategory",
+              "order": "ascending"
+            }
+          ]
+        },
+        {
+          "calculate": "datum.x + (datum.rank_Cylinders - 1) * datum.distinct_Cylinders * 0.000001/datum.distinct_Cylinders",
+          "as": "nx"
+        },
+        {
+          "calculate": "datum.x2 + (datum.rank_Cylinders - 1) * datum.distinct_Cylinders * 0.0000001/datum.distinct_Cylinders",
+          "as": "nx2"
+        },
+        {
+          "calculate": "datum.y + (datum.rank_Origin - 1) * 0.003",
+          "as": "ny"
+        },
+        {
+          "calculate": "datum.y2 + (datum.rank_Origin - 1) * 0.003",
+          "as": "ny2"
+        },
+        {
+          "calculate": "(datum.nx+datum.nx2)/2",
+          "as": "xc"
+        },
+        {
+          "calculate": "(datum.ny+datum.ny2)/2",
+          "as": "yc"
+        }
+      ],
+       "vconcat": [
+        {
+          "layer": [
+                {
+          "mark": {
+            "type": "text",
+            "font": "neue-haas-unica",
+            "fontSize": 14,
+            "fontWeight": 500,
+            "baseline": "middle",
+            "align": "right",
+            "dx": -15
+
+          },
+          "encoding": {
+            "y": {
+              "aggregate": "min",
+              "field": "yc",
+              "type": "quantitative",
+              "title": "",
+              "axis": {
+                "orient": "left"
+              }
+            },
+            "color": {
+              "field": "category",
+              "type": "nominal",
+              "legend": null
+            },
+            "text": {
+              "field": "category",
+              "type": "nominal"
+            }
+          }
+        },
+            {
+              "width": 1000,
+              "height": 2000,
+                "selection": {
+                "highlight": {"type": "single", "empty": "none", "on": "mouseover"},
+                "selectCat": {"type": "single", "fields": ["category"]},
+                "select": {"type": "multi"}
+              },
+              "mark": {
+                "type": "rect",
+                "stroke": "white",
+                "strokeOpacity": 1,
+                "strokeWidth": 2
+              },
+              "encoding": {
+                "x": {
+                  "field": "nx",
+                  "type": "quantitative",
+                  "axis": null
+                },
+                "x2": {
+                  "field": "nx2"
+                },
+                "y": {
+                  "field": "ny",
+                  "type": "quantitative",
+                  "axis": null
+                },
+                "y2": {
+                  "field": "ny2"
+                },
+                "color": {
+                  "condition": {"selection": "selectCat", "field": "category", "type": "nominal", "legend": null},
+                  "value": "gray"
+                },
+                "fillOpacity": {
+                  "legend": null,
+                  "type":"nominal",
+                  "condition": {"selection": "select", "value": 1
+                  },
+
+                  "value": 0.5
+                },
+                "opacity": {
+                    "condition": [
+                      {
+                        "test": {
+                          "and": [
+                            {"selection": "select"},
+                            "length(data(\"select_store\"))"
+                          ]
+                        },
+                        "value": 1
+                      },
+                      {"selection": "highlight", "value": 1}
+                    ],
+                    "value": 0.8
+                  },
+                "tooltip": [
+                  {
+                    "field": "subcategory",
+                    "type": "nominal"
+                  },
+                  {
+                    "field": "amount",
+                    "type": "quantitative"
+                  },
+                                  {
+                    "field": "category",
+                    "type": "nominal"
+                  }
+                ]
+              }
+            },
+            {
+              "mark": {
+                "type": "text",
+                "font": "neue-haas-unica",
+                "fontSize": 12,
+                "baseline": "middle",
+                "limit": 60
+              },
+              "encoding": {
+                "y": {
+                  "field": "yc",
+                  "type": "quantitative",
+                  "axis": null
+                },
+                "x": {
+                  "field": "xc",
+                  "type": "quantitative",
+                  "axis": {
+                    "title": "subcategory",
+                    "titleFont": "neue-haas-unica",
+                    "titleFontSize": 14,
+                    "titleFontWeight": 400,
+                      "titleAlign": "center",
+                    "orient": "top",
+                    "offset": -50
+                  }
+                },
+                "text": {
+                  "field": "subcategory",
+                  "type": "nominal"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "resolve": {
+        "scale": {
+          "y": "shared"
+        }
+      },
+      "config": {
+        "view": {
+          "stroke": ""
+        },
+        "concat": {"spacing": 10},
+        "axis": {
+          "domain": false,
+          "ticks": false,
+          "labels": false,
+          "grid": false
+        }
+      }
+    }
+            var tooltipOptions = {
+              theme: 'custom'
+            };
+
+          vegaEmbed('#lost-bottom-vis', vlSpec, {tooltip: tooltipOptions});
+        </script>
+  </body>
+</html>

@@ -1,0 +1,243 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "data": {
+    "format": {"type": "csv"},
+    "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTUwzHLK4_0BnbMo4MA16rGDRJDt1DLwIUrI05JF0licpdchd8Y3IWFJdtAohYB7nSypxhDRNSynaol/pub?gid=824613166&single=true&output=csv"
+  },
+  "transform": [
+    {
+      "stack": "amount",
+      "groupby": [],
+      "as": [
+        "stack_count_Origin1",
+        "stack_count_Origin2"
+      ],
+      "offset": "normalize",
+      "sort": [
+        {
+          "field": "category",
+          "order": "ascending"
+        }
+      ]
+    },
+    {
+      "window": [
+        {
+          "op": "min",
+          "field": "stack_count_Origin1",
+          "as": "x"
+        },
+        {
+          "op": "max",
+          "field": "stack_count_Origin2",
+          "as": "x2"
+        },
+        {
+          "op": "dense_rank",
+          "as": "rank_Cylinders"
+        },
+        {
+          "op": "distinct",
+          "field": "subcategory",
+          "as": "distinct_Cylinders"
+        }
+      ],
+      "groupby": [
+        "category"
+      ],
+      "frame": [
+        null,
+        null
+      ],
+      "sort": [
+        {
+          "field": "subcategory",
+          "order": "ascending"
+        }
+      ]
+    },
+    {
+      "window": [
+        {
+          "op": "dense_rank",
+          "as": "rank_Origin"
+        }
+      ],
+      "frame": [
+        null,
+        null
+      ],
+      "sort": [
+        {
+          "field": "category",
+          "order": "ascending"
+        }
+      ]
+    },
+    {
+      "stack": "amount",
+      "groupby": [
+        "category"
+      ],
+      "as": [
+        "y",
+        "y2"
+      ],
+      "offset": "normalize",
+      "sort": [
+        {
+          "field": "subcategory",
+          "order": "ascending"
+        }
+      ]
+    },
+      
+    {
+      "calculate": "datum.y + (datum.rank_Cylinders - 1) * datum.distinct_Cylinders * 0.000001/datum.distinct_Cylinders",
+      "as": "ny"
+    },
+    {
+      "calculate": "datum.y2 + (datum.rank_Cylinders - 1) * datum.distinct_Cylinders * 0.0000001/datum.distinct_Cylinders",
+      "as": "ny2"
+    },
+    {
+      "calculate": "datum.x + (datum.rank_Origin - 1) * 0.005",
+      "as": "nx"
+    },
+    {
+      "calculate": "datum.x2 + (datum.rank_Origin - 1) * 0.005",
+      "as": "nx2"
+    },
+    {
+      "calculate": "(datum.nx+datum.nx2)/2",
+      "as": "xc"
+    },
+    {
+      "calculate": "(datum.ny+datum.ny2)/2",
+      "as": "yc"
+    }
+  ],
+  "vconcat": [
+    {
+      "mark": {
+        "type": "text",
+        "baseline": "middle",
+        "align": "center"
+      },
+      "encoding": {
+        "x": {
+          "aggregate": "min",
+          "field": "xc",
+          "type": "quantitative",
+          "title": "category",
+          "axis": {
+            "orient": "top"
+          }
+        },
+        "color": {
+          "field": "category",
+          "type": "nominal",
+          "legend": null
+        },
+        "text": {
+          "field": "category",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "layer": [
+        {
+          "width": 2000,
+          "height": 900,
+          "mark": {
+            "type": "rect"
+          },
+          "encoding": {
+            "x": {
+              "field": "nx",
+              "type": "quantitative",
+              "axis": null
+            },
+            "x2": {
+              "field": "nx2"
+            },
+            "y": {
+              "field": "ny",
+              "type": "quantitative",
+              "axis": null
+            },
+            "y2": {
+              "field": "ny2"
+            },
+            "color": {
+              "field": "category",
+              "type": "nominal",
+              "legend": null
+            },
+            "opacity": {
+              "field": "subcategory",
+              "type": "nominal",
+              "legend": null
+            },
+            "tooltip": [
+              {
+                "field": "category",
+                "type": "nominal"
+              },
+              {
+                "field": "subcategory",
+                "type": "nominal"
+              },
+              {
+                "field": "amount",
+                "type": "quantitative"
+              }
+            ]
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "baseline": "middle"
+          },
+          "encoding": {
+            "x": {
+              "field": "xc",
+              "type": "quantitative",
+              "axis": null
+            },
+            "y": {
+              "field": "yc",
+              "type": "quantitative",
+              "axis": {
+                "title": "subcategory"
+              }
+            },
+            "text": {
+              "field": "subcategory",
+              "type": "nominal"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "resolve": {
+    "scale": {
+      "x": "shared"
+    }
+  },
+  "config": {
+    "view": {
+      "stroke": ""
+    },
+    "concat": {"spacing": 10},
+    "axis": {
+      "domain": false,
+      "ticks": false,
+      "labels": false,
+      "grid": false
+    }
+  }
+}
