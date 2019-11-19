@@ -380,7 +380,7 @@
   "vconcat": [
     {
   "width": 800,
-  "height": 900,
+  "height": 500,
   "selection": {
             "highlight": {"type": "single", "empty": "none", "on": "mouseover"},
             "selectCat": {"type": "single", "fields": ["subcategory"]}
@@ -398,7 +398,10 @@
       "axis": null
     },
     "text": {"field": "emoji", "type": "nominal"},
-    "size": {"value": 60},
+    "size": {
+        "condition": {"selection": "highlight", "value": 55},
+        "value": 50
+    },
     "opacity": {
                 "condition": {"selection": "selectCat", "value": 1},
                 "value": 0.5
@@ -429,13 +432,6 @@
         "field": "amount", "type": "nominal"
       },
       "value": " afasfasfasdfasd"
-    },
-    "opacity": {
-      "condition": {
-        "selection": "selectCat",
-        "value": 1
-      },
-      "value": 0.5
     }
   }
     }
