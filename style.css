@@ -49,6 +49,11 @@ table {
 
 /* custom styling */
 
+img {
+    width: 100%;
+    height: auto;
+}
+
 body {
     margin: 2em;
     font: normal 300 16px/24px "neue-haas-unica", "Helvetica Neue", "Helvetica", sans-serif;
@@ -66,7 +71,8 @@ main {
 }
 
 section {
-    margin-bottom: 2rem;
+    margin-bottom: 4rem;
+    background: #fff;
 }
 
 p {
@@ -74,7 +80,7 @@ p {
 }
 
 h1, h2, h3 {
-    font-weight: 500;
+    font-weight: 600;
     padding-bottom: 1rem;
     padding-top: .4rem;
 }
@@ -87,6 +93,18 @@ h2 {
     font-size: 1.2rem;
 }
 
+.large-number {
+    font-size: 6rem;
+    line-height: 7rem;
+    text-align: center;
+    padding-bottom: .2rem;
+    
+}
+
+.section-hd {
+    padding-top: 3rem;
+}
+
 .vis-title {
 /*    text-align:center;*/
     margin-bottom: 0;
@@ -96,6 +114,33 @@ h2 {
     margin-left: 20%;
     margin-right: 20%;
 /*    min-width: 800px;*/
+    margin-top: 1rem;
+    margin-bottom: 4rem;
+}
+
+.light {
+    color: #fff;
+}
+
+.caption {
+    text-align: center;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.num-callout {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.section-bg {
+    background: #000;
+    position: absolute;
+    left: 0;
+}
+
+.section-bg img {
+    opacity: 0.35;
 }
 
 .vis-embed {
