@@ -55,15 +55,21 @@ img {
 }
 
 body {
-    margin: 2em;
-    font: normal 300 16px/24px "neue-haas-unica", "Helvetica Neue", "Helvetica", sans-serif;
+/*    margin: 2em;*/
+    font: normal 300 16px/150% "neue-haas-unica", "Helvetica Neue", "Helvetica", sans-serif;
 }
 
 header {
-    margin-bottom: 3em;
+    margin-bottom: 3rem;
+    background: #fff;
+}
+
+header h1 {
+    padding: 2rem;
 }
 
 main {
+    margin: 2rem;
     margin-left: 10%;
     margin-right: 10%;
     text-align: left;
@@ -72,7 +78,6 @@ main {
 
 section {
     margin-bottom: 4rem;
-    background: #fff;
 }
 
 p {
@@ -90,7 +95,7 @@ h1 {
 }
 
 h2 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
 }
 
 .large-number {
@@ -99,6 +104,12 @@ h2 {
     text-align: center;
     padding-bottom: .2rem;
     
+}
+
+.emoji {
+    font-size: 4rem;
+    padding-bottom: 1.5rem;
+    text-align: center;
 }
 
 .section-hd {
@@ -111,18 +122,22 @@ h2 {
 }
 
 .bodytext {
-    margin-left: 20%;
-    margin-right: 20%;
-/*    min-width: 800px;*/
-    margin-top: 1rem;
-    margin-bottom: 4rem;
+    margin: 1rem 20% 0rem 20%;
+}
+
+.bodytext-spaced {
+    margin-bottom: 7rem;
+}
+
+.bodytext-vis {
+    margin-bottom: 0;
 }
 
 .light {
     color: #fff;
 }
 
-.caption {
+.caption, .emoji-caption {
     text-align: center;
     font-weight: 400;
     font-style: italic;
@@ -137,6 +152,16 @@ h2 {
     background: #000;
     position: absolute;
     left: 0;
+    z-index: -100;
+}
+
+.section-bg-plain {
+    background: #fff;
+    position: absolute;
+    left: 0;
+    z-index: -50;
+    width: 100%;
+    height: 500px;
 }
 
 .section-bg img {
@@ -161,7 +186,7 @@ h2 {
 }
 
 
-#accessories-vis {
+#accessories-vis, #categories-vis {
     margin-left: 10%;
     margin-right: 10%;
 }

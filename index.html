@@ -24,20 +24,20 @@
     <header><h1>lost and found on the mta</h1></header>
     <main>
       
-          <div class="section-bg rellax" data-rellax-speed="-1.5">
+          <div class="section-bg rellax" data-rellax-speed="-5">
               <img src="assets/andre-benz-XAqaeyzj3NM-unsplash.jpg"/>
           </div>
        
        <section>
           <h2 class="bodytext rellax light section-hd" data-rellax-speed="2">commuting (and forgetting) on new york city transit</h2>
-           <div class="bodytext light">
+           <div class="bodytext light bodytext-spaced">
                <div class="num-callout rellax" data-rellax-speed="1.5">
                    <h3 class="large-number">7,248,768</h3>
                    <p class="caption">people ride New York City transit on an average weekday in 2018</p>
                </div>
                <p class="rellax" data-rellax-speed="1">Every day, millions of people use the MTA in New York City. And, of course, as on any other system of public transit, some of these people forget things on their commutes. Lost items that are turned in by other concerned passengers eventually find their way to the New York City Transit Lost and Found, which cover NYC buses, subways, and the Staten Island Railway.</p>
             </div>
-            <div class="bodytext light">
+            <div class="bodytext light bodytext-spaced">
                <div class="num-callout rellax" data-rellax-speed="1.5">
                    <h3 class="large-number">326,792</h3>
                    <p class="caption">items in the Lost and Found as of November 12, 2019</p>
@@ -45,16 +45,39 @@
                <p class="rellax" data-rellax-speed="1">As of November 12, there were 326792 items in storage, covering everything from keys and purses to clarinets and air conditioners. According to the MTA, items in the lost in found are held anywhere from three months to three years, with unclaimed items “eventually” being auctioned off with funds going to the MTA.</p>
            </div>
        </section>
+       
+       <section>
+            <div class="section-bg-plain"></div>
+            <div class="bodytext section-hd rellax" data-rellax-speed="0">
+                <h2>categories in the lost and found</h2>
+                <p>There are 23 categories of objects in the Lost and Found, each with various subcategories.</p>
+            </div>
+            <!--<div class="emoji-bg rellax" data-rellax-speed="-3">
+                <h3 class="emoji e1">🧢</h3>
+                <h3 class="emoji e2">🎒</h3>
+                <h3 class="emoji e3">📖</h3>
+                <h3 class="emoji e4">👤</h3>
+                <h3 class="emoji e5">👛</h3>
+                <h3 class="emoji e6">🔑</h3>
+                <h3 class="emoji e7">❓</h3>
+                <h3 class="emoji e8">💰</h3>
+                <h3 class="emoji e9">👓</h3>
+            </div>-->
+            <div id="categories-vis" class="vis-embed rellax" data-rellax-speed="0"></div>
+        </section>
         <!--<section>
             <h2>everything in the lost & found by category</h2>
             <div id="lost-all-vis" class="vis-embed"></div>
         </section>-->
         
         <section>
-            <div class="bodytext">
+           <!--<div class="section-bg rellax" data-rellax-speed="-5">
+              <img src="assets/nicole-y-c-19OuV1n0WlI-unsplash.jpg"/>
+          </div>-->
+            <div class="bodytext bodytext-vis rellax" data-rellax-speed="0">
                 <h2 class="vis-title">15 most common categories of items in the lost & found</h2>
             </div>
-            <div id="lost-top-vis" class="vis-embed"></div>
+            <div id="lost-top-vis" class="vis-embed rellax" data-rellax-speed="0"></div>
         </section>
         
         <!--
@@ -346,9 +369,9 @@
                     "titleFont": "neue-haas-unica",
                     "titleFontSize": 14,
                     "titleFontWeight": 400,
-                      "titleAlign": "center",
+                      "titleAlign": "right",
                     "orient": "top",
-                    "offset": -80
+                    "offset": -65
                   }
                 }
                   
@@ -381,6 +404,97 @@
             };
 
           vegaEmbed('#lost-top-vis', vlSpec, options);
+        </script>
+        
+                <!-- categories vis -->
+        <!-- inspired by emoji isotype chart examples (https://vega.github.io/vega-lite/examples/isotype_bar_chart_emoji.html) and Amit Kapoor's unit charts (https://bl.ocks.org/amitkaps/d6648bd8ddb1c1e3706d7530126d1e2b) -->
+        <script>
+          var vlSpec = 
+{
+"$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "data": {
+    "format": {"type": "csv"},
+    "url": "data/mta_lostfound_rename-cat.csv"
+  },
+  "transform": [
+    {
+      "calculate": 
+      "{'Identification': '👤', 'Wallet/ Purse': '👛', 'Bags': '🎒', 'Tickets': '🎟', 'Communication': '📱', 'Currency': '💰', 'Miscellaneous': '❓', 'Clothing': '👕','Keys': '🔑', 'Accessories': '🧢', 'Books': '📖', 'Electronics': '💻', 'Eye Wear': '👓', 'Medical': '💊', 'Jewelry': '💍', 'Footwear': '👟', 'Home Furnishings': '🍽', 'Entertainment': '🎮', 'Sports Equipment': '🏀', 'Toys': '🧸', 'Tools': '🛠', 'Musical Instruments': '🎺', 'NYCT Equipment': '👷'}[datum.category]",
+      "as": "emoji"
+    },
+    {"window": [{"op": "rank", "as": "rank"}], "groupby": ["category"]},
+    {"window": [{"op": "rank", "as": "id"}]},
+    {"calculate": "ceil(datum.id/ 5)", "as": "Y"},
+    {"calculate": "datum.id - (datum.Y - 1) *5", "as": "X"}
+  ],
+  "vconcat": [
+    {
+  "width": 800,
+  "height": 500,
+  "selection": {
+            "highlight": {"type": "single", "empty": "none", "on": "mouseover"},
+            "selectCat": {"type": "single", "fields": ["category"]}
+  },
+  "mark": {"type": "text", "baseline": "middle"},
+  "encoding": {
+    "x": {
+      "field": "X",
+      "type": "ordinal",
+      "axis": null
+    },
+    "y":{
+      "field": "Y",
+      "type": "ordinal",
+      "axis": null
+    },
+    "text": {"field": "emoji", "type": "nominal"},
+    "size": {
+        "condition": {"selection": "highlight", "value": 55},
+        "value": 50
+    },
+    "opacity": {
+                "condition": {"selection": "selectCat", "value": 1},
+                "value": 0.3
+              },
+    "tooltip": [{
+        "field": "category",
+        "type": "nominal"
+     },
+     {
+        "field": "amount",
+        "type": "quantitative"
+     }]
+  }
+  },
+  {
+  "selection": {
+            "highlight": {"type": "single", "empty": "none", "on": "mouseover"},
+            "selectCat": {"type": "single", "fields": ["category"], "empty": "none"}
+  },
+  "transform": [
+      {"filter": {"selection": "selectCat"}}
+    ],
+  "mark": {"type": "text"},
+  "encoding": {
+    "text": {
+      "condition": {
+        "selection": "selectCat",
+        "field": "amount", "type": "nominal"
+      },
+      "value": ""
+    }
+  }
+    }
+  
+  ],
+  "config": {"view": {"stroke": ""}}
+}
+            var options = {
+                tooltip: {theme: 'custom'},
+                actions: false
+            };
+
+          vegaEmbed('#categories-vis', vlSpec, options);
         </script>
         
         <!-- accessories vis -->
@@ -458,7 +572,7 @@
         "selection": "selectCat",
         "field": "amount", "type": "nominal"
       },
-      "value": " afasfasfasdfasd"
+      "value": ""
     }
   }
     }
