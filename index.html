@@ -33,7 +33,7 @@
            <div class="bodytext light bodytext-spaced">
                <div class="num-callout rellax" data-rellax-speed="1.5">
                    <h3 class="large-number">7,248,768</h3>
-                   <p class="caption">people ride New York City transit on an average weekday in 2018</p>
+                   <p class="caption">people ride New York City Transit on an average weekday in 2018</p>
                </div>
                <p class="rellax" data-rellax-speed="1">Every day, millions of people use the MTA in New York City. And, of course, as on any other system of public transit, some of these people forget things on their commutes. Lost items that are turned in by other concerned passengers eventually find their way to the New York City Transit Lost and Found, which cover NYC buses, subways, and the Staten Island Railway.</p>
             </div>
@@ -49,7 +49,7 @@
        <section>
             <div class="section-bg-plain"></div>
             <div class="bodytext section-hd rellax" data-rellax-speed="0">
-                <h2>categories in the lost and found</h2>
+                <h2>what's in the lost and found?</h2>
                 <p>There are 23 categories of objects in the Lost and Found, each with various subcategories.</p>
             </div>
             <!--<div class="emoji-bg rellax" data-rellax-speed="-3">
@@ -63,7 +63,11 @@
                 <h3 class="emoji e8">💰</h3>
                 <h3 class="emoji e9">👓</h3>
             </div>-->
-            <div id="categories-vis" class="vis-embed rellax" data-rellax-speed="0"></div>
+            <div id="cat-type-vis" class="vis-embed rellax" data-rellax-speed="0"></div>
+            <div class="bodytext rellax" data-rellax-speed="0">
+                <p>This is what the Lost and Found sorted by catgory looks like. The largest category is <em>Identification</em>, with <em>260,386 items</em>, and the smallest is <em>NYCT Equipment</em>, with <em>775 items</em>.</p>
+            </div>
+            <div id="cat-overview-vis" class="vis-embed rellax" data-rellax-speed="0"></div>
         </section>
         <!--<section>
             <h2>everything in the lost & found by category</h2>
@@ -368,7 +372,7 @@
                     "title": "subcategory",
                     "titleFont": "neue-haas-unica",
                     "titleFontSize": 14,
-                    "titleFontWeight": 400,
+                    "titleFontWeight": 500,
                       "titleAlign": "right",
                     "orient": "top",
                     "offset": -65
@@ -406,7 +410,7 @@
           vegaEmbed('#lost-top-vis', vlSpec, options);
         </script>
         
-                <!-- categories vis -->
+        <!-- categories type vis -->
         <!-- inspired by emoji isotype chart examples (https://vega.github.io/vega-lite/examples/isotype_bar_chart_emoji.html) and Amit Kapoor's unit charts (https://bl.ocks.org/amitkaps/d6648bd8ddb1c1e3706d7530126d1e2b) -->
         <script>
           var vlSpec = 
@@ -459,10 +463,6 @@
     "tooltip": [{
         "field": "category",
         "type": "nominal"
-     },
-     {
-        "field": "amount",
-        "type": "quantitative"
      }]
   }
   },
@@ -494,7 +494,75 @@
                 actions: false
             };
 
-          vegaEmbed('#categories-vis', vlSpec, options);
+          vegaEmbed('#cat-type-vis', vlSpec, options);
+        </script>
+        
+        <!-- categories overview vis -->
+        <!-- inspired by emoji isotype chart examples (https://vega.github.io/vega-lite/examples/isotype_bar_chart_emoji.html) and Amit Kapoor's unit charts (https://bl.ocks.org/amitkaps/d6648bd8ddb1c1e3706d7530126d1e2b) -->
+        <script>
+          var vlSpec = 
+{
+"$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "data": {
+    "format": {"type": "csv"},
+    "url": "data/mta_lostfound_rename-cat.csv"
+  },
+  "width": 600,
+  "height": 600,
+  "selection": {
+            "highlight": {"type": "single", "empty": "none", "on": "mouseover"},
+            "selectCat": {"type": "single", "fields": ["subcategory"]}
+  },
+  "mark": {"type": "bar", "baseline": "middle"},
+  "encoding": {
+    "y": {
+      "field": "category",
+      "type": "nominal",
+      "sort": "-x",
+      "axis": {
+        "title": "",
+        "labelFont": "neue-haas-unica",
+        "labelFontSize": 12,
+        "labelFontWeight": 400
+      }
+    },
+    "x":{
+      "field": "amount",
+      "type": "quantitative",
+      "axis": {
+        "title": "number of items",
+        "titleFont": "neue-haas-unica",
+        "titleFontSize": 12,
+        "titleFontWeight": 500,
+        "titlePadding": 15,
+        "labelFont": "neue-haas-unica",
+        "labelFontSize": 10,
+        "labelFontWeight": 400
+      }
+    },
+    "color": {"value":"#0039A6"},
+    "opacity": {
+                "condition": {"selection": "highlight", "value": 0.8},
+                "value": 1
+              },
+    "tooltip": [{
+        "field": "category",
+        "type": "nominal"
+     },
+     {
+        "field": "amount",
+        "type": "quantitative"
+     }]
+  
+  },
+  "config": {"view": {"stroke": ""}}
+}
+            var options = {
+                tooltip: {theme: 'custom'},
+                actions: false
+            };
+
+          vegaEmbed('#cat-overview-vis', vlSpec, options);
         </script>
         
         <!-- accessories vis -->
