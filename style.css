@@ -59,13 +59,18 @@ body {
     font: normal 300 16px/150% "neue-haas-unica", "Helvetica Neue", "Helvetica", sans-serif;
 }
 
-header {
+header, footer {
     margin-bottom: 3rem;
     background: #fff;
 }
 
 header h1 {
     padding: 2rem;
+}
+
+footer {
+    text-align: center;
+    font-style: italic;
 }
 
 main {
@@ -86,6 +91,7 @@ p {
 
 em {
     font-weight: 500;
+    color: #0039A6;
 }
 
 h1, h2, h3 {
@@ -96,6 +102,7 @@ h1, h2, h3 {
 
 h1 {
     font-size: 2rem;
+    color: #0039A6;
 }
 
 h2 {
@@ -107,6 +114,7 @@ h2 {
     line-height: 7rem;
     text-align: center;
     padding-bottom: .2rem;
+    color: #0039A6;
     
 }
 
@@ -121,8 +129,11 @@ h2 {
 }
 
 .vis-title {
-/*    text-align:center;*/
+    text-align:center;
     margin-bottom: 0;
+    padding-bottom: 0;
+    margin-top: 2rem;
+/*    z-index: 15;*/
 }
 
 .bodytext {
@@ -137,7 +148,7 @@ h2 {
     margin-bottom: 0;
 }
 
-.light {
+.light, h3.light {
     color: #fff;
 }
 
@@ -153,7 +164,7 @@ h2 {
 }
 
 .section-bg {
-    background: #000;
+    background: #0039A6;
     position: absolute;
     left: 0;
     z-index: -100;
@@ -169,7 +180,41 @@ h2 {
 }
 
 .section-bg img {
-    opacity: 0.35;
+    opacity: 0.25;
+}
+
+.item { padding: 0}
+.item0 {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+.item1 {
+    margin-left: 0%;
+    margin-right: 30%;
+}
+.item2 {
+    margin-left: 60%;
+    margin-right: 10%;
+}
+.item3 {
+    margin-left: 10%;
+    margin-right: 60%;
+}
+.item4 {
+    margin-left: 50%;
+    margin-right: 10%;
+}
+.item5 {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+.item6 {
+    margin-left: 0%;
+    margin-right: 50%;
+}
+.item7 {
+    margin-left: 40%;
+    margin-right: 10%;
 }
 
 .vis-embed {
@@ -185,16 +230,22 @@ h2 {
     color: black;
 }
 
-#lost-top-vis {
+#lost-top-vis, #lost-bottom-vis {
     margin-left: -6% !important;
+/*    margin-top: -1.5rem;*/
+    margin-bottom: 2rem;
 }
 
 
-#accessories-vis, #cat-type-vis, #cat-overview-vis {
+#accessories-vis, #cat-type-vis, #cat-overview-vis, #topbottom-vis {
     margin-left: 10%;
     margin-right: 10%;
 }
 
-#cat-overview-vis {
+#cat-overview-vis, #accessories-vis {
     margin-top: 2rem;
+}
+
+#topbottom-vis {
+    margin-top: 1.5rem;
 }
