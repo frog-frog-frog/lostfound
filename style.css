@@ -64,9 +64,20 @@ header, footer {
     background: #fff;
 }
 
-header h1 {
+header h1, header h3 {
+    display: inline-block;
     padding: 2rem;
 }
+
+header h1 a, header h3 a {
+    color: #0039A6;
+    text-decoration: none;
+}
+
+header h1 a:hover, header h3 a:hover {
+    opacity: 0.5;
+}
+
 
 footer {
     text-align: center;
@@ -83,6 +94,14 @@ main {
 
 section {
     margin-bottom: 4rem;
+}
+
+a {
+    color: #0039A6;
+}
+
+a:hover {
+    opacity: 0.7;
 }
 
 p {
