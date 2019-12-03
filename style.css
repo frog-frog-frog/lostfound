@@ -231,7 +231,7 @@ h2 {
 }
 
 #lost-top-vis, #lost-bottom-vis {
-    margin-left: -6% !important;
+/*    margin-left: -6% !important;*/
 /*    margin-top: -1.5rem;*/
     margin-bottom: 2rem;
 }
